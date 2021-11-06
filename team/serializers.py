@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers
+from rest_framework import fields, serializers
 from .models import Team
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,5 +13,11 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
 class TeamSerializer(serializers.ModelSerializer):
+  members = UserSerializer(many=True,_read_only=True)
   class Meta:
     model = Team
+    fields = (
+      "id",
+      "name",
+      "members",
+    )
